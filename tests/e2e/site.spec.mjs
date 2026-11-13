@@ -1,5 +1,8 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // End-to-end tests of the static site in Chromium, served with the production CSP.
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures.mjs'
 import { createHash } from 'node:crypto'
 import { createRequire } from 'node:module'
 

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Property-based tests (fast-check): random inputs against node:crypto and the comparison rules.
 import { test } from 'node:test'
 import assert from 'node:assert/strict'

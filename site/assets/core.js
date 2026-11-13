@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Muhr pure logic: SHA-256, hex helpers, hash comparison, receipt model, UI strings.
 // No DOM, no network. Loaded as a classic script in the browser (exposes globalThis.MuhrCore)
 // and by Node for the unit tests (module.exports).
@@ -59,7 +62,7 @@
     var g = env || (typeof globalThis !== 'undefined' ? globalThis : {})
     try {
       if (g.crypto && g.crypto.subtle && g.isSecureContext) return g.crypto.subtle.digest('SHA-256', bytes).then(hex)
-    } catch (e) { /* fall through to the pure-JS digest */ }
+    } catch { /* fall through to the pure-JS digest */ }
     return Promise.resolve(shaJs(bytes))
   }
 
@@ -71,7 +74,9 @@
   // ---------- comparison ----------
   // Accepts "SHA256: ABC...", spaces and line breaks; returns lowercase hex or ''.
   function normalizeHash (s) {
-    return String(s == null ? '' : s).trim().toLowerCase().replace(/^sha256[:\s]*/, '').replace(/\s+/g, '')
+    var t = ''
+    try { t = String(s == null ? '' : s) } catch { /* a value with no text form is not a hash */ }
+    return t.trim().toLowerCase().replace(/^sha256[:\s]*/, '').replace(/\s+/g, '')
   }
   function isHash (s) { return /^[0-9a-f]{64}$/.test(s) }
   // 'empty' | 'badHex' | 'ok' | 'bad'

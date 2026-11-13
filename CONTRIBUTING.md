@@ -22,13 +22,18 @@ Requirements: Node.js 24 and Git. There is no build step: `site/` is served as i
 npm ci                                  # test tools only; the site has no runtime dependencies
 npx playwright install chromium         # once, for the browser tests
 node tools/check-site.mjs               # links, CSP rules, forbidden text
-npm test                                # unit tests with a coverage gate, then browser tests
+npm run lint                            # ESLint, no warnings allowed
+npm test                                # unit tests, browser tests, then the combined coverage gate
 ```
 
 ## Requirements for a change
 
 - **Tests.** New behaviour and every bug fix come with an automated test in `tests/`. CI runs `npm test` on
-  every pull request and fails if coverage of the tested logic drops below the gate (90 % lines, 80 % branches).
+  every pull request and fails if coverage drops below the gates: 90 % lines and 80 % branches for the demo
+  logic (`site/assets/core.js`, unit tests), and 90 % statements and lines and 80 % branches for all JavaScript
+  in `site/` (unit and browser tests combined, `tools/coverage.mjs`; report in `coverage/`).
+- **Lint.** `npm run lint` (ESLint, [eslint.config.mjs](eslint.config.mjs)) passes with no warnings.
+- **Licence headers.** New source files start with the SPDX header used in the others; `reuse lint` passes.
 - **The CSP.** The site is served with `default-src 'self'`: no inline `<script>`, no inline event handlers and
   no third-party origins. `tools/check-site.mjs` enforces this.
 - **Coding standard.** Plain modern JavaScript (ES2022), no frameworks and no runtime dependencies; build the DOM

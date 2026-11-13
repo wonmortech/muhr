@@ -52,6 +52,10 @@ seed phrases.
   notes, design inspiration
 - Design direction: [DESIGN.md](DESIGN.md)
 - Questions and ideas: [GitHub issues](https://github.com/wonmortech/muhr/issues)
+- Security reports (private, not issues): [SECURITY.md](SECURITY.md); verifying a release:
+  [SECURITY.md#verifying-a-release](SECURITY.md#verifying-a-release)
+- How the project is run: [GOVERNANCE.md](GOVERNANCE.md), [CONTRIBUTING.md](CONTRIBUTING.md),
+  [CHANGELOG.md](CHANGELOG.md)
 
 ## Site development
 
@@ -60,12 +64,16 @@ third-party requests). The three language pages are generated from one template:
 
 ```sh
 node tools/pages.mjs   # rewrites site/index.html, site/en/, site/ru/, site/404.html, site/favicon.svg
+npm run lint           # ESLint, no warnings allowed
+npm test               # unit + browser tests, then the combined coverage gate over all site JavaScript
 ```
 
 ## License
 
 Apache-2.0. The planned `muhr-action` will be MIT and the `.muhr.json` spec CC BY 4.0. Fonts in
-`site/fonts/` are under the SIL Open Font License (see the `LICENSE-*.txt` files there).
+`site/fonts/` are under the SIL Open Font License (see the `LICENSE-*.txt` files there). Every file
+carries SPDX copyright and licence information, checked by [REUSE](https://reuse.software/) in CI; licence
+texts are in [`LICENSES/`](LICENSES/) and [REUSE.toml](REUSE.toml) covers files that cannot hold a comment.
 
 ---
 

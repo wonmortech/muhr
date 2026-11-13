@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Unit tests for site/assets/core.js (the pure logic behind the in-browser demo).
 import { test, describe } from 'node:test'
 import assert from 'node:assert/strict'
@@ -100,6 +103,12 @@ describe('normalizeHash / isHash / verdict (compare and tamper check)', () => {
     assert.equal(core.normalizeHash('sha256 ' + h), h)
     assert.equal(core.normalizeHash(null), '')
     assert.equal(core.normalizeHash(undefined), '')
+  })
+
+  test('a value that cannot be turned into text gives "" instead of throwing', () => {
+    assert.equal(core.normalizeHash({ toString: null }), '')
+    assert.equal(core.normalizeHash(Object.create(null)), '')
+    assert.equal(core.verdict({ toString: null }, 'a'.repeat(64)), 'empty')
   })
 
   test('isHash accepts exactly 64 hex digits', () => {

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Dependency-free static server for the e2e tests. Serves site/ with the same security headers as
 // production: they are read from deploy/Caddyfile, so a CSP change there is tested here too.
 // Usage: node tests/serve.mjs [port]   (default 47391, or PORT)
