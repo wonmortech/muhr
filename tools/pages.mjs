@@ -331,7 +331,7 @@ ${alts}
 <meta property="og:title" content="${extraTitle || t.title}">
 <meta property="og:description" content="${t.desc}">
 <meta property="og:url" content="${ORIGIN}${path}">
-<meta property="og:image" content="${ORIGIN}/og.png">
+<meta property="og:image" content="${ORIGIN}/og-${t.lang}.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="${t.locale}">
