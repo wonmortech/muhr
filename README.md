@@ -1,5 +1,11 @@
 # Muhr
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16668/badge)](https://www.bestpractices.dev/projects/16668)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/wonmortech/muhr/badge)](https://scorecard.dev/viewer/?uri=github.com/wonmortech/muhr)
+[![CI](https://github.com/wonmortech/muhr/actions/workflows/ci.yml/badge.svg)](https://github.com/wonmortech/muhr/actions/workflows/ci.yml)
+[![Mozilla Observatory A+](https://img.shields.io/badge/Mozilla_Observatory-A%2B-brightgreen)](https://developer.mozilla.org/en-US/observatory/analyze?host=muhr.wonmor.io)
+[![SSL Labs A+](https://img.shields.io/badge/SSL_Labs-A%2B-brightgreen)](https://www.ssllabs.com/ssltest/analyze.html?d=muhr.wonmor.io)
+
 **Proof that a file existed on a given day and has not changed since. No coin, no custody.**
 
 Muhr (Uzbek for *seal*) is a planned open-source tool. It binds the SHA-256 hash of a file to

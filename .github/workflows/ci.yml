@@ -16,7 +16,7 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -30,3 +30,14 @@ jobs:
       # third-party origins (the CSP would block them) and anything that must never be published.
       - name: Check site
         run: node tools/check-site.mjs
+
+      # Dev dependencies only (@playwright/test); the site itself has none.
+      - name: Install test dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      # Unit tests with a coverage gate on the demo logic, then Chromium end-to-end tests.
+      - name: Test
+        run: npm test

@@ -340,6 +340,7 @@ ${alts}
 <link rel="preload" href="/fonts/serif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/muhr.css?v=${VER}">
 <script src="/assets/theme.js?v=${VER}"></script>
+<script src="/assets/core.js?v=${VER}" defer></script>
 <script src="/assets/app.js?v=${VER}" defer></script>
 </head>`
 }
