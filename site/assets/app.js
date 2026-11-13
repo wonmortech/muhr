@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Muhr home page behaviour. No dependencies, no network requests.
 (function () {
   'use strict'
@@ -39,7 +42,7 @@
     themeBtn.addEventListener('click', function () {
       var next = effective() === 'dark' ? 'light' : 'dark'
       doc.setAttribute('data-theme', next)
-      try { localStorage.setItem('muhr-theme', next) } catch (e) { /* not persisted */ }
+      try { localStorage.setItem('muhr-theme', next) } catch { /* not persisted */ }
       paintThemeBtn()
       document.dispatchEvent(new CustomEvent('muhr:theme'))
     })
@@ -134,7 +137,7 @@
   var copyBtn = document.getElementById('copy'), cmp = document.getElementById('cmp'), expect = document.getElementById('d-expect'), verdict = document.getElementById('verdict')
   var tabS = document.getElementById('tab-stamp'), tabC = document.getElementById('tab-cmp'), panel = document.getElementById('demo-panel')
   var miniSeal = document.querySelector('.receipt .mini-seal')
-  var mode = 'stamp', fileBytes = null, fileLabel = '', salt = null, current = '', seq = 0
+  var mode = 'stamp', fileBytes = null, salt = null, current = '', seq = 0
 
   var cells = []
   for (var i = 0; i < 64; i++) { var s = document.createElement('span'); s.textContent = '0'; grid.appendChild(s); cells.push(s) }
@@ -215,7 +218,7 @@
     fname.textContent = f.name + ' · ' + T.reading
     f.arrayBuffer().then(function (buf) {
       if (my !== fileSeq) return // a newer file was chosen while this one was read
-      fileBytes = new Uint8Array(buf); fileLabel = f.name
+      fileBytes = new Uint8Array(buf)
       fname.textContent = f.name + ' · ' + C.sizeLabel(f.size)
       run(true)
     }, function () {

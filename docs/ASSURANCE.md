@@ -177,3 +177,8 @@ after `node tools/check-site.mjs`).
 Coverage of the logic file is enforced by `node --test --experimental-test-coverage` with
 minimums of 90 % lines, 80 % branches and 90 % functions (`npm run test:unit`). At the time of
 writing it reports 99.24 % lines, 94.34 % branches and 100 % functions for `site/assets/core.js`.
+
+Coverage of all JavaScript in `site/` is measured as well: the browser tests record Chromium V8 coverage
+(`tests/e2e/fixtures.mjs`), `tools/coverage.mjs` merges it with the unit-test V8 coverage, and `npm test` fails
+below 90 % statements, 90 % lines or 80 % branches over all of `site/**/*.js`. No code is excluded from the
+measurement. `npm run lint` (ESLint, `--max-warnings 0`) runs in the same CI job.

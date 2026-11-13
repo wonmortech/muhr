@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Hero signature: a sheet of paper, its SHA-256 lifting off as 64 glyphs, a wax seal pressed
 // with those glyphs as its rim, then a Merkle branch into a Bitcoin block.
 // Canvas 2D, no dependencies. Pauses off screen and in hidden tabs; one still frame under
@@ -7,7 +10,7 @@
   var cv = document.getElementById('seal')
   if (!cv) return
   var ctx = null
-  try { ctx = cv.getContext('2d') } catch (e) { ctx = null }
+  try { ctx = cv.getContext('2d') } catch { ctx = null }
   if (!ctx) { document.documentElement.classList.add('no-canvas'); return }
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches

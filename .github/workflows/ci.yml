@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+# SPDX-License-Identifier: Apache-2.0
+
 name: CI
 
 on:
@@ -31,13 +34,22 @@ jobs:
       - name: Check site
         run: node tools/check-site.mjs
 
-      # Dev dependencies only (@playwright/test); the site itself has none.
+      # Every file carries SPDX copyright and licence information (REUSE.toml for files without comments).
+      - name: REUSE compliance
+        uses: fsfe/reuse-action@676e2d560c9a403aa252096d99fcab3e1132b0f5 # v6.0.0
+
+      # Dev dependencies only (test, lint and coverage tools); the site itself has none.
       - name: Install test dependencies
         run: npm ci --ignore-scripts
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      # Unit tests with a coverage gate on the demo logic, then Chromium end-to-end tests.
+      # ESLint over site, tests and tools; any warning fails the job.
+      - name: Lint
+        run: npm run lint
+
+      # Unit tests (coverage gate on the demo logic), Chromium end-to-end tests, then the combined
+      # unit + e2e coverage gate over every script in site/.
       - name: Test
         run: npm test

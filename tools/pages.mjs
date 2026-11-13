@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Generates site/index.html (uz), site/en/index.html, site/ru/index.html and site/404.html
 // from one template. The site itself has no build step: the generated HTML is committed as is.
 // Usage: node tools/pages.mjs
@@ -9,6 +12,10 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', 'site')
 const ORIGIN = 'https://muhr.wonmor.io'
 const GH = 'https://github.com/wonmortech/muhr'
 const VER = '1'
+// REUSE/SPDX header of every generated file. In HTML it follows <!doctype html> (standards mode).
+// REUSE-IgnoreStart
+const SPDX = 'SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors\nSPDX-License-Identifier: Apache-2.0'
+// REUSE-IgnoreEnd
 
 // ---------- wax seal SVG (procedural edge, same noun as the hero canvas) ----------
 function blob (cx, cy, r, n = 72, seed = 0) {
@@ -314,6 +321,7 @@ function langSwitch (cur) {
 function head (t, path, extraTitle) {
   const alts = ['uz', 'en', 'ru'].map(k => `<link rel="alternate" hreflang="${k}" href="${ORIGIN}${L[k].path}">`).join('\n')
   return `<!doctype html>
+<!-- ${SPDX} -->
 <html lang="${t.lang}">
 <head>
 <meta charset="utf-8">
@@ -572,5 +580,5 @@ out('index.html', home(L.uz))
 out('en/index.html', home(L.en))
 out('ru/index.html', home(L.ru))
 out('404.html', notFound())
-writeFileSync(join(ROOT, 'favicon.svg'), sealSvg('fv', '', 'Muhr').replace('class=""', 'xmlns="http://www.w3.org/2000/svg"'), 'utf8')
+writeFileSync(join(ROOT, 'favicon.svg'), `<!-- ${SPDX} -->\n` + sealSvg('fv', '', 'Muhr').replace('class=""', 'xmlns="http://www.w3.org/2000/svg"'), 'utf8')
 console.log('wrote favicon.svg')

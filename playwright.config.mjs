@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // End-to-end tests: Chromium only, against site/ served by tests/serve.mjs with the production headers.
 // Set PW_CHROMIUM_PATH to use an already installed Chromium instead of the one Playwright downloads.
 import { defineConfig, devices } from '@playwright/test'

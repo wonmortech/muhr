@@ -9,6 +9,21 @@ documents change, there is no released product yet.
 
 ### Added
 - Property-based tests with fast-check on random input, run in CI with the unit tests.
+- ESLint (`npm run lint`, no warnings allowed) over the site scripts, tests and tools, run in CI.
+- Combined JavaScript coverage of every script in `site/`: Chromium coverage from the browser tests merged with
+  the unit-test coverage, gated in CI at 90 % statements and lines and 80 % branches.
+- Browser tests for the hero animation under normal and reduced motion, system theme changes, the mobile menu,
+  copy, drag and drop, unreadable files, and browsers without canvas or observers.
+- SPDX copyright and licence information in every file, `LICENSES/`, `REUSE.toml`, and a REUSE check in CI.
+- "Verifying a release" in SECURITY.md.
+
+### Changed
+- GOVERNANCE.md states that both maintainer accounts belong to the founder today, and lists an independent
+  second owner as an open goal.
+
+### Fixed
+- The hash comparison no longer throws on a value that has no text form; it treats it as empty.
+- Unused variables removed from the site scripts (no change in behaviour).
 
 ## [0.1.0] - 2026-11-14
 

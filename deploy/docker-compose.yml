@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Wonmor and Muhr contributors
+# SPDX-License-Identifier: Apache-2.0
+
 services:
   muhr-site:
     image: caddy:2-alpine
