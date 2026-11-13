@@ -269,6 +269,7 @@ html.js .draw:not(.in) path, html.js .draw:not(.in) line, html.js .draw:not(.in)
 .file-btn:hover { border-color: var(--ink-2); }
 .file-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--mono); }
 .opt { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; font-size: 15px; color: var(--ink-2); }
+.opt[hidden] { display: none; }
 .opt input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--accent); flex: none; }
 .opt small { display: block; color: var(--mute); font-size: 13px; }
 .cmp { display: none; margin-top: 14px; }
