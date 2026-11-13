@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muhr — proof that a file existed, unchanged</title>
+<meta name="description" content="Muhr is an open tool that binds a file’s hash to Bitcoin (OpenTimestamps) and to an open transparency log. No coin, no custody. Anyone can verify the proof offline. Status: planning.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14110f" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://muhr.wonmor.io/en/">
+<link rel="alternate" hreflang="uz" href="https://muhr.wonmor.io/">
+<link rel="alternate" hreflang="en" href="https://muhr.wonmor.io/en/">
+<link rel="alternate" hreflang="ru" href="https://muhr.wonmor.io/ru/">
+<link rel="alternate" hreflang="x-default" href="https://muhr.wonmor.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Muhr">
+<meta property="og:title" content="Muhr — proof that a file existed, unchanged">
+<meta property="og:description" content="Muhr is an open tool that binds a file’s hash to Bitcoin (OpenTimestamps) and to an open transparency log. No coin, no custody. Anyone can verify the proof offline. Status: planning.">
+<meta property="og:url" content="https://muhr.wonmor.io/en/">
+<meta property="og:image" content="https://muhr.wonmor.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/muhr.css?v=1">
+<script src="/assets/theme.js?v=1"></script>
+<script src="/assets/app.js?v=1" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" class="sr-only" aria-hidden="true" focusable="false">
+<symbol id="i-gh" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58 .1 .79-.25 .79-.56v-2c-3.2 .7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72 .08-.7 .08-.7 1.16 .08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36 .96 .1-.75 .4-1.26 .73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26 .45-2.29 1.19-3.1-.12-.29-.52-1.46 .11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18 .63 1.59 .23 2.76 .11 3.05 .74 .81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68 .41 .36 .78 1.06 .78 2.14v3.17c0 .31 .21 .67 .8 .56A11.5 11.5 0 0 0 12 .5Z"/></symbol>
+<symbol id="i-yes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.6A8.4 8.4 0 0 1 9.4 4a8.4 8.4 0 1 0 10.6 10.6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z M14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+</svg>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="/en/" aria-label="Muhr"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="mkw" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="mki" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#mkw)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#mki)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg><span>Muhr</span></a>
+    <nav class="nav" id="nav" aria-label="Menu">
+      <a href="#proves">What it proves</a><a href="#how">How it works</a><a href="#try">Try it</a><a href="#roadmap">Roadmap</a>
+    </nav>
+    <div class="tools">
+      <div class="lang" role="group" aria-label="Language"><a href="/" hreflang="uz" lang="uz">UZ</a><a href="/en/" hreflang="en" lang="en" aria-current="true">EN</a><a href="/ru/" hreflang="ru" lang="ru">RU</a></div>
+      <button class="icon-btn" type="button" id="theme" aria-label="Toggle theme"><svg class="ic-sun"><use href="#i-sun"/></svg></button>
+      <a class="icon-btn gh-link" href="https://github.com/wonmortech/muhr" aria-label="GitHub"><svg><use href="#i-gh"/></svg></a>
+      <button class="icon-btn menu-btn" type="button" id="menu" aria-expanded="false" aria-controls="nav" aria-label="Menu"><svg><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="chip"><i></i>Planning · nothing released yet</span>
+        <h1 id="h1">This file <em>existed</em> on this day. Unchanged.</h1>
+        <p class="lead">Muhr binds only a file’s hash to Bitcoin and an open log. Anyone can check the proof without our server.</p>
+        <div class="cta">
+          <a class="btn primary magnet" href="#try">Try it in your browser<svg><use href="#i-arrow"/></svg></a>
+          <a class="btn" href="https://github.com/wonmortech/muhr"><svg><use href="#i-gh"/></svg>Follow on GitHub</a>
+        </div>
+        <p class="vow"><span>No token</span><span>No custody</span><span>Your file never leaves</span></p>
+      </div>
+      <div class="stage" id="stage">
+        <canvas id="seal" aria-hidden="true" data-file="contract.pdf" data-log="log" data-btc="Bitcoin" data-sample="Tashkent, 13 November. The parties agreed."></canvas>
+        <svg class="fallback" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="fbw" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="fbi" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#fbw)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#fbi)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>
+        <p class="sr-only">Illustration: a 64-character SHA-256 hash lifts off a document, becomes the rim of a wax seal, and the seal is linked through a Merkle branch into a Bitcoin block.</p>
+        <span class="stage-note" aria-hidden="true">Illustration</span>
+        <ul class="steps" aria-label="Illustration"><li><button type="button" data-step="0" aria-pressed="true"><b>1</b>File</button></li><li><button type="button" data-step="1" aria-pressed="false"><b>2</b>Hash</button></li><li><button type="button" data-step="2" aria-pressed="false"><b>3</b>Seal</button></li><li><button type="button" data-step="3" aria-pressed="false"><b>4</b>Bitcoin</button></li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="proves" aria-labelledby="proves-h">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="kicker">01 · What it proves</span><h2 id="proves-h">It proves when. Not who.</h2></div><p>We state the limit up front: the seal shows the date and the integrity. Who signed is shown by the e-signature itself.</p></div>
+      <div class="proof-sheet rv">
+        <div class="proof-col yes">
+          <h3><svg class=""><use href="#i-yes"/></svg>Proves</h3>
+          <ul class="plist"><li><svg class=""><use href="#i-yes"/></svg><div><strong>It existed by this date</strong><span>By Bitcoin block time, accurate to a few hours.</span></div></li><li><svg class=""><use href="#i-yes"/></svg><div><strong>Not a single byte changed</strong><span>If the hash differs, so does the file.</span></div></li><li><svg class=""><use href="#i-yes"/></svg><div><strong>Checkable without us</strong><span>The receipt, the open <code>ots</code> client and Bitcoin headers are enough.</span></div></li></ul>
+          <div class="fp-demo">
+            <label for="fp-in">Change one letter</label>
+            <div class="fp-row"><input id="fp-in" type="text" value="Tashkent, 13 November. The parties agreed." autocomplete="off" spellcheck="false"></div>
+            <p class="fp-hash" id="fp-out" aria-live="polite"></p>
+            <p class="fp-note">One letter, a completely different hash. That is why a hash is a file’s fingerprint.</p>
+          </div>
+        </div>
+        <div class="proof-col no">
+          <h3><svg class=""><use href="#i-no"/></svg>Does not prove</h3>
+          <ul class="plist"><li><svg class=""><use href="#i-no"/></svg><div><strong>Who wrote or signed it</strong><span>An EIMZO (PKCS#7) signature does that. Muhr only displays it.</span></div></li><li><svg class=""><use href="#i-no"/></svg><div><strong>That the content is true</strong><span>Muhr does not read or judge the file.</span></div></li><li><svg class=""><use href="#i-no"/></svg><div><strong>Notarisation</strong><span>It is extra, independently checkable evidence. It does not replace an official RFC 3161 timestamp.</span></div></li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="kicker">02 · How it works</span><h2 id="how-h">Five steps. Your file stays on your device.</h2></div><p>Only a 64-character hash is sent. Everything else is open standards.</p></div>
+      <ol class="flow"><li><div class="fig"><svg class="draw" viewBox="0 0 120 90" aria-hidden="true"><rect x="14" y="10" width="40" height="52" rx="5" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:190"/><line x1="22" y1="24" x2="46" y2="24" stroke="currentColor" stroke-width="1.6" style="--len:30"/><line x1="22" y1="33" x2="44" y2="33" stroke="currentColor" stroke-width="1.6" style="--len:30"/><line x1="22" y1="42" x2="40" y2="42" stroke="currentColor" stroke-width="1.6" style="--len:30"/><path d="M58 36h14" stroke-width="1.6" style="--len:20;stroke:var(--accent)"/><text x="76" y="30" font-size="9" fill="currentColor" style="font-family:var(--mono)">9f2c</text><text x="76" y="42" font-size="9" fill="currentColor" style="font-family:var(--mono)">a07e</text><text x="76" y="54" font-size="9" style="font-family:var(--mono);fill:var(--accent)">…64</text></svg></div><h3>Hash</h3><p>SHA-256 is computed in the browser or the CLI.</p><span class="chip now">Works below</span></li><li><div class="fig"><svg class="draw" viewBox="0 0 120 90" aria-hidden="true"><path d="M60 14 34 40M60 14l26 26M34 40 22 66M34 40l12 26M86 40 74 66M86 40l12 26" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:60"/><circle cx="60" cy="14" r="5" stroke-width="1.8" style="--len:40;fill:var(--panel);stroke:var(--accent)"/><circle cx="34" cy="40" r="4" stroke="currentColor" stroke-width="1.6" style="--len:30;fill:var(--panel)"/><circle cx="86" cy="40" r="4" stroke="currentColor" stroke-width="1.6" style="--len:30;fill:var(--panel)"/><rect x="17" y="66" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:40"/><rect x="41" y="66" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:40"/><rect x="69" y="66" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:40"/><rect x="93" y="66" width="10" height="10" rx="2" stroke-width="1.6" style="--len:40;fill:var(--accent);stroke:var(--accent)"/></svg></div><h3>Log</h3><p>The hash goes into an open, append-only Merkle log (RFC 9162 style).</p><span class="chip soon">Soon</span></li><li><div class="fig"><svg class="draw" viewBox="0 0 120 90" aria-hidden="true"><rect x="8" y="30" width="26" height="26" rx="4" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:110"/><rect x="47" y="30" width="26" height="26" rx="4" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:110"/><rect x="86" y="30" width="26" height="26" rx="4" fill="none" stroke-width="2" style="--len:110;stroke:var(--accent)"/><path d="M34 43h13M73 43h13" stroke="currentColor" stroke-width="1.6" style="--len:20"/><path d="M93 43.5l4 4 8-8.5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="--len:24;stroke:var(--accent)"/><path d="M99 30V16H60" fill="none" stroke-width="1.4" stroke-dasharray="3 3" style="--len:60;stroke:var(--accent)"/></svg></div><h3>Bitcoin</h3><p>The log root reaches a Bitcoin block through public OpenTimestamps calendars. It takes a few hours.</p><span class="chip soon">Soon</span></li><li><div class="fig"><svg class="draw" viewBox="0 0 120 90" aria-hidden="true"><path d="M30 8h44l14 14v60H30Z" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:220"/><path d="M74 8v14h14" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:30"/><line x1="38" y1="32" x2="70" y2="32" stroke="currentColor" stroke-width="1.6" style="--len:34"/><line x1="38" y1="41" x2="76" y2="41" stroke="currentColor" stroke-width="1.6" style="--len:40"/><line x1="38" y1="50" x2="62" y2="50" stroke="currentColor" stroke-width="1.6" style="--len:26"/><circle cx="74" cy="68" r="10" stroke-width="1.6" style="--len:70;fill:var(--accent);stroke:var(--accent)"/><text x="34" y="78" font-size="8" fill="currentColor" style="font-family:var(--mono)">.ots</text></svg></div><h3>Receipt</h3><p><code>.muhr.json</code>: an inclusion proof plus the <code>.ots</code> file. You keep it.</p><span class="chip soon">Soon</span></li><li><div class="fig"><svg class="draw" viewBox="0 0 120 90" aria-hidden="true"><rect x="14" y="14" width="58" height="40" rx="5" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:200"/><line x1="14" y1="24" x2="72" y2="24" stroke="currentColor" stroke-width="1.6" style="--len:60"/><path d="M80 32h10a4 4 0 0 1 4 4v28H62V58" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:90"/><rect x="88" y="44" width="22" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="1.6" style="--len:110"/><circle cx="43" cy="66" r="13" fill="none" stroke-width="2" style="--len:90;stroke:var(--accent)"/><path d="M37 66l4.5 4.5 8-9" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="--len:24;stroke:var(--accent)"/></svg></div><h3>Verify</h3><p>Browser, CLI or Telegram bot. Works even if our server is gone.</p><span class="chip soon">Soon</span></li></ol>
+      <p class="offline-line rv"><svg width="22" height="22" aria-hidden="true"><use href="#i-lock"/></svg><span><strong>Even if Wonmor disappears</strong>, the proof still works: verification relies on Bitcoin headers and the open <code>ots</code> client.</span></p>
+    </div>
+  </section>
+
+  <section class="sec" id="try" aria-labelledby="try-h">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="kicker">03 · Try it</span><h2 id="try-h">The hash is computed right here, now.</h2></div><p>Type text or drop a file. Nothing is sent. Anchoring to Bitcoin is not built yet.</p></div>
+      <div class="demo" id="demo">
+        <div class="pane">
+          <div class="tabs" role="tablist" aria-label="03 · Try it">
+            <button type="button" role="tab" id="tab-stamp" aria-selected="true" aria-controls="demo-panel">Stamp (preview)</button>
+            <button type="button" role="tab" id="tab-cmp" aria-selected="false" aria-controls="demo-panel" tabindex="-1">Compare</button>
+          </div>
+          <div id="demo-panel" role="tabpanel" aria-labelledby="tab-stamp">
+            <div class="drop" id="drop">
+              <label class="sr-only" for="d-text">Text or file</label>
+              <textarea id="d-text" spellcheck="false">Tashkent, 13 November. The parties agreed.</textarea>
+              <div class="file-row">
+                <label class="file-btn" for="d-file"><svg width="16" height="16" aria-hidden="true"><use href="#i-file"/></svg>Choose file</label>
+                <input class="sr-only" type="file" id="d-file">
+                <span class="file-name" id="d-fname">or drop it here</span>
+              </div>
+            </div>
+            <label class="opt" id="opt-salt"><input type="checkbox" id="d-salt"><span>Salted hash<small>So a short secret text cannot be guessed. The salt stays with you.</small></span></label>
+            <div class="cmp" id="cmp">
+              <label for="d-expect">Expected hash (64 hex)</label>
+              <input id="d-expect" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="e.g. the SHA-256 from a release page">
+              <p class="verdict" id="verdict" role="status"></p>
+            </div>
+          </div>
+        </div>
+        <div class="pane" aria-live="polite">
+          <div class="hash-meta"><span>SHA-256 · 64 hex</span><button class="copy" type="button" id="copy">Copy</button></div>
+          <div class="grid64" id="grid" aria-hidden="true"></div>
+          <p class="sr-only" id="hash-sr"></p>
+          <div class="receipt-title"><strong>.muhr.json</strong><span class="chip soon">Preview · format v0 not final</span></div>
+          <div class="receipt"><svg class="mini-seal" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="rcw" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="rci" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#rcw)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#rci)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg><pre id="receipt"></pre></div>
+          <p class="demo-foot"><svg class=""><use href="#i-lock"/></svg><span>Computed on your device with WebCrypto. Neither the text nor the file is sent anywhere.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="who" aria-labelledby="who-h">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="kicker">04 · Who it is for</span><h2 id="who-h">For work that has a signature and needs a date.</h2></div><p>The first user is Wonmor itself: releases and articles.</p></div>
+      <div class="aud">
+        <article class="rv"><div class="head"><h3>Open-source maintainers</h3><span class="chip soon">First: bitg releases</span></div><p>Release files get sealed: whoever downloads them can check they are exactly these bytes.</p>
+          <div class="mock"><div class="row"><svg class="sealdot" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="a0w" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="a0i" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#a0w)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#a0i)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg><span class="nm">release-x64.msi</span><span class="h">soon</span></div><div class="row"><svg class="sealdot" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="a1w" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="a1i" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#a1w)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#a1i)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg><span class="nm">release_amd64.deb</span><span class="h">soon</span></div><div class="row"><svg class="sealdot" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="a2w" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="a2i" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#a2w)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#a2i)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg><span class="nm">release-universal.pkg</span><span class="h">soon</span></div><div class="row"><svg class="sealdot" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="a3w" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="a3i" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#a3w)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#a3i)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg><span class="nm">SHA256SUMS</span><span class="h">soon</span></div></div></article>
+        <article class="rv"><div class="head"><h3>Lawyers and freelancers</h3><span class="chip soon">Planned</span></div><p>Contracts, deliverables, designs: evidence that "I had this on that day".</p>
+          <div class="mock mock-doc"><div class="lines"><span></span><span></span><span></span><span></span></div><svg class="" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="dcw" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="dci" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#dcw)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#dci)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg></div></article>
+        <article class="rv"><div class="head"><h3>Writers and researchers</h3><span class="chip soon">First: wonmor.io articles</span></div><p>Show that an article was not quietly edited after it was published.</p>
+          <div class="mock"><div class="row"><svg class="sealdot" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="b1w" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="b1i" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#b1w)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#b1i)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg><span class="nm">v1 sealed</span><span class="h">9f2c…a07e</span></div><div class="row"><svg class="sealdot"><use href="#i-no"/></svg><span class="nm">v2 different hash</span><span class="h">41d8…3b10</span></div></div></article>
+        <article class="rv"><div class="head"><h3>Businesses, via API</h3><span class="chip soon">Later</span></div><p>For contract archives and reports. Paid in som, as an ordinary software service.</p>
+          <div class="mock mock-api">POST /stamp   {"hash": "9f2c…a07e"}
+GET  /proof/9f2c…a07e   → .muhr.json</div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="open" aria-labelledby="open-h">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="kicker">05 · Open source and standards</span><h2 id="open-h">You can check all of it. Us included.</h2></div><p>Open standards only. The code will ship under Apache-2.0.</p></div>
+      <div class="std rv"><a href="https://opentimestamps.org/"><span class="t">OpenTimestamps</span><span class="d">Anchors hashes to Bitcoin, free public calendars</span><span class="x">Read ↗</span></a><a href="https://www.rfc-editor.org/rfc/rfc9162"><span class="t">RFC 9162 · CT 2.0</span><span class="d">Merkle log and inclusion proof format</span><span class="x">Read ↗</span></a><a href="https://github.com/sigstore/rekor"><span class="t">Sigstore Rekor</span><span class="d">Open transparency log, phase 2</span><span class="x">Read ↗</span></a><a href="https://csrc.nist.gov/pubs/fips/180-4/upd1/final"><span class="t">SHA-256 · FIPS 180-4</span><span class="d">The hash algorithm standard</span><span class="x">Read ↗</span></a><a href="https://www.rfc-editor.org/rfc/rfc5652"><span class="t">RFC 5652 · CMS / PKCS#7</span><span class="d">Structure of EIMZO signatures, display only</span><span class="x">Read ↗</span></a><a href="https://www.rfc-editor.org/rfc/rfc3161"><span class="t">RFC 3161 · TSP</span><span class="d">Official timestamps: we work alongside, never instead</span><span class="x">Read ↗</span></a><a href="https://www.w3.org/TR/webcrypto/"><span class="t">W3C Web Crypto</span><span class="d">The browser hash uses this API</span><span class="x">Read ↗</span></a><a href="https://datatracker.ietf.org/wg/scitt/about/"><span class="t">IETF SCITT</span><span class="d">IETF work on Bitcoin-anchored time proofs, watched</span><span class="x">Read ↗</span></a></div>
+      <div class="repos"><div class="repo rv"><code>wonmortech/muhr</code><p>Rust CLI, .NET API and web verifier</p><div class="meta"><span class="chip">Apache-2.0</span><span class="chip soon">Planned</span></div></div><div class="repo rv"><code>wonmortech/muhr-action</code><p>GitHub Action that seals release files</p><div class="meta"><span class="chip">MIT</span><span class="chip soon">Planned</span></div></div><div class="repo rv"><code>wonmortech/muhr-spec</code><p><code>.muhr.json</code> format specification</p><div class="meta"><span class="chip">CC BY 4.0</span><span class="chip soon">Planned</span></div></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="roadmap" aria-labelledby="roadmap-h">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="kicker">06 · Roadmap</span><h2 id="roadmap-h">Eight weeks to v0.1, in the open.</h2></div><p>An order, not dates. Each stage gets ticked here when it is done.</p></div>
+      <ol class="road rv"><li class="cur"><span class="w">Week 1–2</span><h3>CLI and log</h3><p><code>muhr stamp/verify</code>, Merkle log, <code>.muhr.json</code> v0. First seals: bitg releases and wonmor.io articles.</p><span class="chip soon">Soon</span></li><li><span class="w">Week 3–4</span><h3>API and verifier page</h3><p><code>POST /stamp</code>, <code>GET /proof</code>, offline verification in the browser.</p><span class="chip soon">Soon</span></li><li><span class="w">Week 5–6</span><h3>Telegram bot and PKCS#7</h3><p>Send a file, get a receipt. EIMZO signatures shown with a "not cryptographically verified" label.</p><span class="chip soon">Soon</span></li><li><span class="w">Week 7–8</span><h3>GitHub Action and v0.1</h3><p>Automatic sealing of release files, security page, threat model.</p><span class="chip soon">Soon</span></li></ol>
+      <div class="later"><div class="rv"><h3>A second log</h3><p>Log roots also written to Sigstore Rekor or another open log.</p><span class="chip">Later</span></div><div class="rv"><h3>Business API</h3><p>Volume, SLA, on-premise install. Paid in som.</p><span class="chip">Later</span></div><div class="rv"><h3>For agents</h3><p><code>stamp_hash</code> MCP tool: an agent seals its own output.</p><span class="chip">Later</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="status" aria-labelledby="status-h">
+    <div class="wrap status">
+      <div class="rv"><span class="kicker">07 · Honest status</span><h2 id="status-h">Today this is a plan. No code yet.</h2><p class="status-sub">What exists and what does not. Updated monthly.</p><p class="warnbox">Muhr will never ask for money, keys, a seed phrase or crypto, and will never message you first. The only official addresses are <strong>muhr.wonmor.io</strong> and <strong>github.com/wonmortech</strong>.</p></div>
+      <dl class="ledger rv"><div><dt>Research and plan</dt><dd class="y">done</dd></div><div><dt>Hash demo on this page</dt><dd class="y">works</dd></div><div><dt>CLI, API, log</dt><dd class="n">soon</dd></div><div><dt>Anchoring to Bitcoin</dt><dd class="n">soon</dd></div><div><dt>Users</dt><dd class="n">none yet</dd></div><div><dt>Security audit</dt><dd class="n">planned</dd></div><div><dt>Legal opinion</dt><dd class="n">questions ready</dd></div></dl>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <svg class="big-seal" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="fnw" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="fni" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#fnw)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#fni)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>
+      <h2 class="rv">Let’s press the first seal together.</h2>
+      <p class="rv">Have an idea, a question or found a mistake? Open an issue on GitHub. The plan and the research are public.</p>
+      <div class="cta"><a class="btn primary" href="https://github.com/wonmortech/muhr/issues"><svg><use href="#i-gh"/></svg>Open an issue</a><a class="btn" href="https://github.com/wonmortech/muhr/blob/main/docs/PLAN.md">Read the plan</a></div>
+    </div>
+  </section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="by"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="ftw" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#d9564a"/><stop offset=".55" stop-color="#ab2b22"/><stop offset="1" stop-color="#6e1510"/></radialGradient>
+    <radialGradient id="fti" cx="62%" cy="66%" r="70%"><stop offset="0" stop-color="#c13a30"/><stop offset="1" stop-color="#8a1f18"/></radialGradient>
+  </defs>
+  <path d="M61.98 32.00L61.82 34.61L60.87 37.09L59.73 39.43L58.42 41.62L56.72 43.53L54.81 45.17L53.32 46.93L52.49 49.19L51.75 51.75L50.34 53.86L48.16 55.08L45.78 55.86L43.68 57.05L41.76 58.82L39.62 60.44L37.15 61.19L34.55 61.10L32.00 60.68L29.54 60.09L27.23 59.04L25.17 57.49L23.23 56.10L21.00 55.59L18.28 55.76L15.47 55.60L13.23 54.36L11.72 52.28L10.40 50.13L8.76 48.28L6.99 46.44L5.68 44.27L5.04 41.81L4.68 39.32L4.34 36.88L4.36 34.42L5.11 32.00L6.21 29.74L6.70 27.54L6.12 25.06L5.19 22.24L5.11 19.46L6.32 17.17L8.23 15.35L10.09 13.61L11.80 11.80L13.71 10.20L15.94 9.06L18.21 8.12L20.34 6.99L22.49 5.87L24.87 5.38L27.36 5.71L29.73 6.08L32.00 5.55L34.44 4.12L37.13 2.91L39.79 2.91L42.16 4.09L44.27 5.69L46.29 7.25L48.14 8.95L49.64 10.97L50.96 13.04L52.53 14.77L54.49 16.25L56.24 18.00L57.13 20.28L57.33 22.78L57.80 25.09L59.16 27.21L60.92 29.47Z" fill="url(#ftw)"/>
+  <circle cx="32" cy="32" r="19.5" fill="url(#fti)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="30 92" transform="rotate(200 32 32)"/>
+  <circle cx="32" cy="32" r="19.5" fill="none" stroke="#3a0805" stroke-opacity=".35" stroke-width="1" stroke-dasharray="30 92" transform="rotate(20 32 32)"/>
+  <g class="rim" fill="none" stroke="#f3c2b9" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"><line x1="54.50" y1="32.00" x2="56.60" y2="32.00"/><line x1="52.79" y1="40.61" x2="54.73" y2="41.41"/><line x1="47.91" y1="47.91" x2="49.39" y2="49.39"/><line x1="40.61" y1="52.79" x2="41.41" y2="54.73"/><line x1="32.00" y1="54.50" x2="32.00" y2="56.60"/><line x1="23.39" y1="52.79" x2="22.59" y2="54.73"/><line x1="16.09" y1="47.91" x2="14.61" y2="49.39"/><line x1="11.21" y1="40.61" x2="9.27" y2="41.41"/><line x1="9.50" y1="32.00" x2="7.40" y2="32.00"/><line x1="11.21" y1="23.39" x2="9.27" y2="22.59"/><line x1="16.09" y1="16.09" x2="14.61" y2="14.61"/><line x1="23.39" y1="11.21" x2="22.59" y2="9.27"/><line x1="32.00" y1="9.50" x2="32.00" y2="7.40"/><line x1="40.61" y1="11.21" x2="41.41" y2="9.27"/><line x1="47.91" y1="16.09" x2="49.39" y2="14.61"/><line x1="52.79" y1="23.39" x2="54.73" y2="22.59"/></g>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#3a0805" stroke-opacity=".45" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" transform="translate(.7 .7)"/>
+  <path d="M22.5 41V23.5l9.5 11 9.5-11V41" fill="none" stroke="#f6d3cc" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg><div><p><strong>Muhr</strong> — a Wonmor project.</p><p>Open source, Apache-2.0. No coin, no custody.</p></div></div>
+    <div><h2>Projects</h2><ul>
+      <li><a href="https://wonmor.io">Wonmor studio</a></li>
+      <li><a href="https://sanad.wonmor.io">Sanad — verifiable certificates</a></li>
+      <li><a href="https://shaffof.wonmor.io">Shaffof — open charity ledger</a></li>
+    </ul></div>
+    <div><h2>Sources</h2><ul>
+      <li><a href="https://github.com/wonmortech/muhr">GitHub</a></li>
+      <li><a href="https://github.com/wonmortech/muhr/tree/main/docs/research">Research</a></li>
+      <li><a href="https://github.com/wonmortech/muhr/blob/main/docs/PLAN.md">Plan</a></li>
+      <li><a href="https://github.com/wonmortech/muhr/issues">Ask a question</a></li>
+    </ul></div>
+    <div class="fine"><span>© 2026 Wonmor · Apache-2.0</span><span>This page runs without cookies, analytics or third-party scripts.</span></div>
+  </div>
+</footer>
+<script src="/assets/seal.js?v=1" defer></script>
+</body>
+</html>
