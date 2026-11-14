@@ -59,8 +59,8 @@ seed phrases.
 
 ## Site development
 
-`site/` is plain HTML, CSS and JS with self-hosted fonts and a strict CSP (no inline scripts, no
-third-party requests). The three language pages are generated from one template:
+`site/` is plain HTML, CSS and JS with self-hosted fonts and a strict CSP (no inline scripts or
+styles, no third-party requests). The three language pages are generated from one template:
 
 ```sh
 node tools/pages.mjs   # rewrites site/index.html, site/en/, site/ru/, site/404.html, site/favicon.svg

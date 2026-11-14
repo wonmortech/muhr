@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 // Checks site/ before CI deploys it. No dependencies, no build: site/ is served as it is.
-// Fails on: missing required pages, broken local links, inline <script> (the CSP blocks it),
+// Fails on: missing required pages, broken local links, inline <script>, style attributes and <style> (the CSP blocks them),
 // third-party origins in src/srcset/url() (the CSP blocks them), and text that must never be published.
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, relative, dirname, extname } from 'node:path';
@@ -53,6 +53,8 @@ for (const f of files) {
       if (!/\bsrc=/.test(m[1]) || m[2].trim()) errors.push(`${rel(f)}: inline <script> (blocked by the CSP)`);
     }
     if (/<[a-z][^>]*\son[a-z]+\s*=\s*["']/i.test(src)) errors.push(`${rel(f)}: inline event handler (blocked by the CSP)`);
+    if (/<[a-z][^>]*\sstyle\s*=\s*["']/i.test(src)) errors.push(`${rel(f)}: inline style attribute (blocked by the CSP)`);
+    if (/<style\b/i.test(src)) errors.push(`${rel(f)}: inline <style> element (blocked by the CSP)`);
     for (const m of src.matchAll(/\b(?:src|srcset|poster)="([^"]+)"/g)) {
       for (const u of m[1].split(',').map((s) => s.trim().split(/\s+/)[0])) {
         if (/^(https?:)?\/\//.test(u)) { errors.push(`${rel(f)}: third-party resource ${u}`); continue; }

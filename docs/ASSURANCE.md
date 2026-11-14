@@ -90,7 +90,7 @@ residual risks), GitHub itself, and the visitor's browser and device.
 | Principle (Saltzer and Schroeder) | How it is applied |
 | --- | --- |
 | Economy of mechanism | No framework, no bundler, no runtime dependencies, no server code. About 760 lines of first-party JS in four files. The demo logic is one small file with no DOM access. |
-| Fail-safe defaults | CSP is `default-src 'self'`; anything not listed is blocked. `receive.sh` refuses archives without `index.html`, with links or special files, over 300 MB, or whose `version.txt` does not match the commit. Unknown page language: the script does nothing. Unknown theme value: ignored. WebCrypto unavailable or throwing: a pure-JS SHA-256 is used, never a fake value. |
+| Fail-safe defaults | CSP is `default-src 'self'` and `style-src 'self'` with no `unsafe-inline`; anything not listed is blocked (`check-site.mjs` fails on a `style` attribute or a `<style>` element). `receive.sh` refuses archives without `index.html`, with links or special files, over 300 MB, or whose `version.txt` does not match the commit. Unknown page language: the script does nothing. Unknown theme value: ignored. WebCrypto unavailable or throwing: a pure-JS SHA-256 is used, never a fake value. |
 | Complete mediation | Every input path into the page (text box, file picker, drag and drop, compare box, fingerprint box, `localStorage`, `<html lang>`) goes through code that treats it as data. Every deploy goes through the same receiver checks, including manual ones. |
 | Least privilege | Workflows run with `permissions: contents: read` and `persist-credentials: false`. The deploy key can run exactly one program. The browser page asks for no permissions; `Permissions-Policy` denies camera, microphone and geolocation. The site container serves files only; it cannot change its own containers (`docker-compose.yml` and `receive` are server-managed). |
 | Open design | The code, the server config, the deploy path and this document are public. Security does not depend on any of them being secret; only the deploy key and the server address are secrets. |
@@ -142,9 +142,6 @@ Page behaviour is otherwise unchanged; the end-to-end tests check the visible re
 
 ## 6. Residual risks
 
-- **`style-src 'unsafe-inline'`.** The 404 page and one element of the home pages use inline
-  `style` attributes. This allows CSS injection if an HTML injection were ever found, but not script
-  execution. Moving those styles into `muhr.css` would let us drop it.
 - **The edge proxy and host are trusted.** Whoever controls them can change what is served. HSTS
   is set without `includeSubDomains`/`preload`; a first visit over a hostile network could still be
   downgraded until the browser has seen the header once.
