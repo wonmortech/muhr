@@ -36,8 +36,8 @@ pipx run reuse lint                     # SPDX header or REUSE.toml entry for ev
   in `site/` (unit and browser tests combined, `tools/coverage.mjs`; report in `coverage/`).
 - **Lint.** `npm run lint` (ESLint, [eslint.config.mjs](eslint.config.mjs)) passes with no warnings.
 - **Licence headers.** New source files start with the SPDX header used in the others; `reuse lint` passes.
-- **The CSP.** The site is served with `default-src 'self'`: no inline `<script>`, no inline event handlers and
-  no third-party origins. `tools/check-site.mjs` enforces this.
+- **The CSP.** The site is served with `default-src 'self'`: no inline `<script>`, no inline event handlers, no
+  `style` attributes or `<style>` elements (put styles in `site/assets/muhr.css`) and no third-party origins. `tools/check-site.mjs` enforces this.
 - **Coding standard.** Plain modern JavaScript (ES2022), no frameworks and no runtime dependencies; build the DOM
   with `textContent` and DOM APIs, never `innerHTML` with data. Keep each language page (`/`, `/en/`, `/ru/`)
   in sync, and keep the page accessible (WCAG 2.2 AA: contrast, focus, keyboard, `prefers-reduced-motion`).

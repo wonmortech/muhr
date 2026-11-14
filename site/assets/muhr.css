@@ -248,6 +248,11 @@ section { position: relative; }
 .draw path, .draw line, .draw rect, .draw circle, .draw polyline { stroke-dasharray: var(--len, 400); stroke-dashoffset: 0; }
 html.js .draw:not(.in) path, html.js .draw:not(.in) line, html.js .draw:not(.in) rect, html.js .draw:not(.in) circle, html.js .draw:not(.in) polyline { stroke-dashoffset: var(--len, 400); }
 .draw path, .draw line, .draw rect, .draw circle, .draw polyline { transition: stroke-dashoffset 1.7s var(--ease); }
+/* Stroke length and colours of the figures: classes, not style="" (the CSP has no 'unsafe-inline' for styles). */
+.draw .len-20 { --len: 20; } .draw .len-24 { --len: 24; } .draw .len-26 { --len: 26; } .draw .len-30 { --len: 30; } .draw .len-34 { --len: 34; }
+.draw .len-40 { --len: 40; } .draw .len-60 { --len: 60; } .draw .len-70 { --len: 70; } .draw .len-90 { --len: 90; } .draw .len-110 { --len: 110; }
+.draw .len-190 { --len: 190; } .draw .len-200 { --len: 200; } .draw .len-220 { --len: 220; }
+.draw .acc-stroke { stroke: var(--accent); } .draw .acc-fill { fill: var(--accent); } .draw .panel-fill { fill: var(--panel); } .draw .mono-text { font-family: var(--mono); }
 .offline-line { margin-top: 36px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding: 18px 22px; border-radius: 16px; border: 1px dashed var(--accent); color: var(--ink-2); }
 .offline-line strong { color: var(--ink); }
 
@@ -390,6 +395,8 @@ html.js .rv.in { opacity: 1; transform: none; }
 .nf h1 { font-size: clamp(44px, 7vw, 96px); margin: 18px 0 12px; }
 .nf p { color: var(--ink-2); }
 .nf svg { width: 140px; height: 140px; margin: 0 auto; }
+.nf .nf-alt { margin-top: 6px; color: var(--mute); }
+.nf .cta { justify-content: center; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1080px) {

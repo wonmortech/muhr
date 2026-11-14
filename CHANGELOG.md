@@ -25,6 +25,10 @@ documents change, there is no released product yet.
 - The hash comparison no longer throws on a value that has no text form; it treats it as empty.
 - Unused variables removed from the site scripts (no change in behaviour).
 
+### Security
+- The CSP no longer allows `style-src 'unsafe-inline'`. The inline styles of the how-it-works figures and the 404
+  page moved into `muhr.css`, and `tools/check-site.mjs` fails on any new `style` attribute or `<style>` element.
+
 ## [0.1.0] - 2026-11-14
 
 ### Added
