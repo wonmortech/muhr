@@ -18,8 +18,8 @@ documents change, there is no released product yet.
 - "Verifying a release" in SECURITY.md.
 
 ### Changed
-- GOVERNANCE.md states that both maintainer accounts belong to the founder today, and lists an independent
-  second owner as an open goal.
+- GOVERNANCE.md names two independent owners and maintainers, @wonmors (founder) and @xnosir (technical
+  maintainer), and states openly that the founder's account runs delegated automation during setup.
 
 ### Fixed
 - The hash comparison no longer throws on a value that has no text form; it treats it as empty.
