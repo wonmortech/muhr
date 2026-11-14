@@ -68,6 +68,12 @@ npm run lint           # ESLint, no warnings allowed
 npm test               # unit + browser tests, then the combined coverage gate over all site JavaScript
 ```
 
+## Contributing
+
+Issues and pull requests are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), and look for issues labelled
+[good first issue](https://github.com/wonmortech/muhr/labels/good%20first%20issue). Every commit needs a
+`Signed-off-by` line (`git commit -s`).
+
 ## License
 
 Apache-2.0. The planned `muhr-action` will be MIT and the `.muhr.json` spec CC BY 4.0. Fonts in
