@@ -25,6 +25,7 @@ npx playwright install chromium         # once, for the browser tests
 node tools/check-site.mjs               # links, CSP rules, forbidden text
 npm run lint                            # ESLint, no warnings allowed
 npm test                                # unit tests, browser tests, then the combined coverage gate
+pipx run reuse lint                     # SPDX header or REUSE.toml entry for every file
 ```
 
 ## Requirements for a change
