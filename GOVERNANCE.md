@@ -6,7 +6,7 @@ Muhr is a project of [Wonmor](https://wonmor.io), run in the public `wonmortech`
 
 | Role | Who | Can do |
 |---|---|---|
-| Maintainer | [@wonmors](https://github.com/wonmors), [@XakimovNosirbek](https://github.com/XakimovNosirbek) | Review and merge pull requests, triage issues, cut releases, handle security reports |
+| Maintainer | [@wonmors](https://github.com/wonmors) (founder, project lead), [@xnosir](https://github.com/xnosir) (technical maintainer) | Review and merge pull requests, triage issues, cut releases, handle security reports |
 | Contributor | Anyone who opens an issue or a pull request | Propose changes; becomes a maintainer after sustained, reviewed contributions and the maintainers' agreement |
 
 The `core` team of the organization holds admin rights; `maintainers` and `contributors` teams map to the roles above.
@@ -20,21 +20,29 @@ recorded in the plan. When maintainers disagree, the project lead (@wonmors) dec
 
 ## Continuity
 
-We say this openly: both maintainer accounts above currently belong to the founder, so the project does not
-yet have an independent second person with access. Continuity today relies on:
+Two independent people hold owner rights in the `wonmortech` organization and maintain the project:
 
-- the account recovery settings of the `wonmortech` organization and of its owner accounts, so access to the
-  repository, the domain configuration and the deployment secrets can be restored;
+- [@wonmors](https://github.com/wonmors), the founder and project lead;
+- [@xnosir](https://github.com/xnosir), the technical maintainer.
+
+Each signs in with their own account and two-factor authentication, which the organization requires of every
+member. Either one alone can review and merge, cut a release, deploy the site, change the domain and
+deployment settings, and handle security reports, so the project continues if one of them is unavailable.
+Beyond the two owners, continuity rests on:
+
 - automated deployment from `main` ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)), so no single
-  machine is needed to publish, and a public repository that anyone can fork under the Apache-2.0 licence.
+  machine is needed to publish;
+- a public repository with its full history, which anyone can fork under the Apache-2.0 licence.
 
-Adding an independent second owner is an open goal; see [Open goals](#open-goals).
+We also say this openly: while the project is being set up, the technical maintainer runs some repository
+automation on the founder's behalf, with tokens the founder delegated. When setup is finished the founder
+revokes those tokens and runs the account alone. Until then, a pull request opened through that automation
+and approved by @xnosir has the same person behind both steps.
 
 ## Open goals
 
-- **An independent second owner.** A person other than the founder who holds owner rights in the organization
-  and can publish the site and handle security reports. Until then, the bus factor of the project is one.
-- **More active maintainers.** Contributors become maintainers as described under [Roles](#roles).
+- **More active maintainers.** Contributors become maintainers as described under [Roles](#roles). A maintainer
+  from outside Wonmor would make the project independent of a single organization.
 
 ## Security
 
