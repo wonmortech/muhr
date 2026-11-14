@@ -12,7 +12,8 @@
     "test:e2e": "playwright test",
     "coverage": "node tools/coverage.mjs report",
     "lint": "eslint . --max-warnings 0",
-    "check": "node tools/check-site.mjs"
+    "check": "node tools/check-site.mjs",
+    "serve": "node tests/serve.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
