@@ -15,7 +15,7 @@ const rules = {
 }
 
 export default [
-  { ignores: ['node_modules/', 'test-results/', 'playwright-report/', '.qa/', '.coverage/', 'coverage/'] },
+  { ignores: ['node_modules/', 'test-results/', 'playwright-report/', '.qa/', '.coverage/', 'coverage/', 'dist/'] },
   js.configs.recommended,
   {
     // The site: classic scripts loaded by <script src>, run in the browser.
@@ -29,6 +29,12 @@ export default [
     languageOptions: { globals: { module: 'readonly' } }
   },
   {
+    // The concept demo (demo/): browser ES modules; it reads the SHA-256 core from globalThis.MuhrCore.
+    files: ['demo/**/*.js'],
+    languageOptions: { ecmaVersion: 'latest', sourceType: 'module', globals: { ...globals.browser } },
+    rules
+  },
+  {
     // Tests, tools and configs: ES modules run by Node.
     files: ['**/*.mjs'],
     languageOptions: { ecmaVersion: 'latest', sourceType: 'module', globals: { ...globals.node } },
@@ -36,7 +42,7 @@ export default [
   },
   {
     // Code inside page.evaluate() runs in the browser.
-    files: ['tests/e2e/**/*.mjs'],
+    files: ['tests/e2e/**/*.mjs', 'tests/demo/**/*.mjs'],
     languageOptions: { globals: { ...globals.browser } }
   }
 ]

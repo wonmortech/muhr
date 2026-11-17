@@ -8,6 +8,10 @@ documents change, there is no released product yet.
 ## [Unreleased]
 
 ### Added
+- Concept demo (`demo/`, live at https://wonmor.io/demo/muhr/): the planned product UI on fictional data, with
+  stamping, receipts, the offline verifier, the open log with consistency proofs, integrations and the Telegram bot.
+  Hashing and RFC 9162 proofs are real; calendars and Bitcoin are simulated. `npm run demo`, smoke test in CI
+  (`npm run test:demo`), README screenshots from `npm run site:screenshots`.
 - Property-based tests with fast-check on random input, run in CI with the unit tests.
 - ESLint (`npm run lint`, no warnings allowed) over the site scripts, tests and tools, run in CI.
 - Combined JavaScript coverage of every script in `site/`: Chromium coverage from the browser tests merged with

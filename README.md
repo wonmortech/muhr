@@ -1,71 +1,88 @@
 # Muhr
 
+Proof that a file existed on a given day and has not changed since: SHA-256, an open Merkle log and Bitcoin
+through OpenTimestamps. No coin, no custody.
+
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16668/badge)](https://www.bestpractices.dev/projects/16668)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/wonmortech/muhr/badge)](https://scorecard.dev/viewer/?uri=github.com/wonmortech/muhr)
 [![CI](https://github.com/wonmortech/muhr/actions/workflows/ci.yml/badge.svg)](https://github.com/wonmortech/muhr/actions/workflows/ci.yml)
 [![Mozilla Observatory A+](https://img.shields.io/badge/Mozilla_Observatory-A%2B-brightgreen)](https://developer.mozilla.org/en-US/observatory/analyze?host=muhr.wonmor.io)
 [![SSL Labs A+](https://img.shields.io/badge/SSL_Labs-A%2B-brightgreen)](https://www.ssllabs.com/ssltest/analyze.html?d=muhr.wonmor.io)
 
-**Proof that a file existed on a given day and has not changed since. No coin, no custody.**
+**[Website](https://muhr.wonmor.io) · [Live demo](https://wonmor.io/demo/muhr/) · [Plan](docs/PLAN.md) · [Releases](https://github.com/wonmortech/muhr/releases)**
 
-Muhr (Uzbek for *seal*) is a planned open-source tool. It binds the SHA-256 hash of a file to
-Bitcoin through [OpenTimestamps](https://opentimestamps.org/) and to an open, append-only
-transparency log in the style of [RFC 9162](https://www.rfc-editor.org/rfc/rfc9162). The file can
-be an EIMZO-signed document, a software release or an article. Anyone can then check the proof
-offline, without our server.
+![Muhr concept demo: overview of the open log, daily stamps by source, the latest tree head and Bitcoin delay](docs/screenshots/overview.jpg)
 
-> **Status: planning. Nothing is released yet.** There is no CLI, API or log today. This repository
-> holds the research, the plan and the home page. The only working part is the in-browser hash
-> demo on the site.
+> **Status: planning.** There is no CLI, API, log or bot yet. The [live demo](https://wonmor.io/demo/muhr/) is the
+> planned product UI on fictional data: the SHA-256 hashing and the RFC 9162 Merkle maths in it are real, the
+> OpenTimestamps calendars and Bitcoin confirmations are simulated. Muhr (Uzbek for *seal*) will be open source.
 
-## Why
+## What it does
 
-- A qualified e-signature says **who** signed a document. It does not independently prove **when**
-  the file existed.
-- Verification that depends on one website is fragile. Fake verification sites are a documented
-  problem in Uzbekistan (see [docs/research/legal.md](docs/research/legal.md)).
-- Open-source releases and published articles need a public, checkable "these exact bytes, no
-  later than this date".
+- **Stamp any file.** It is hashed on your device; only the 32-byte hash goes to the log. Salted hashes for short secrets.
+- **Open, append-only log.** RFC 9162 style Merkle log with hourly tree heads, inclusion and consistency proofs.
+- **Anchored in Bitcoin.** Every tree head goes to three public OpenTimestamps calendars and lands in a block within hours.
+- **Receipts you keep.** `.muhr.json` (inclusion proof) plus the `.ots` file. No account needed.
+- **Verify without us.** Browser, CLI or Telegram bot; the check needs the file, the receipt and Bitcoin block headers.
+- **Honest limits.** It proves *when*, not *who*: no author, no content truth, no notarised date. EIMZO signatures are shown, not verified.
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Stamp](docs/screenshots/stamp.jpg) | ![Receipts](docs/screenshots/receipts.jpg) |
+| Stamp text or a file: the hash is computed locally and a receipt comes back at once. | Receipts on this device, filtered by state: in Bitcoin, upgradable, in a calendar, retried, queued. |
+| ![Receipt](docs/screenshots/receipt.jpg) | ![Signed document](docs/screenshots/receipt-eimzo.jpg) |
+| One receipt: the inclusion proof is recomputed in the browser, calendars and the Bitcoin block are listed. | An EIMZO-signed `.p7s`: the signature is displayed and clearly marked as not cryptographically checked. |
+| ![Verify](docs/screenshots/verify.jpg) | ![Tampered](docs/screenshots/verify-tampered.jpg) |
+| The offline verifier: hash, inclusion proof, known tree head, Bitcoin header. | One changed digit in the file and the check fails at the first step. |
+| ![Open log](docs/screenshots/log.jpg) | ![Consistency](docs/screenshots/consistency.jpg) |
+| The public log: hourly tree heads with their anchoring state. | A real RFC 9162 consistency proof between any two published heads. |
+| ![Integrations](docs/screenshots/integrations.jpg) | ![Telegram bot](docs/screenshots/bot.jpg) |
+| Planned CLI, GitHub Action and API, with releases stamped by the Action. | The planned Telegram bot: send a file, get a receipt; `/verify` checks it. |
+| ![Dark theme](docs/screenshots/overview-dark.jpg) | ![Phone](docs/screenshots/phone.jpg) |
+| Dark theme. | The verifier on a phone. |
 
 ## How verification will work
 
-1. You hash the file locally (browser or CLI). **Only the hash leaves your device.**
-2. The hash is appended to an open Merkle log, and you get an inclusion proof.
-3. Every hour the log root is timestamped through public OpenTimestamps calendars. A few hours
-   later it is committed in a Bitcoin block.
-4. You keep a receipt: `.muhr.json` (inclusion proof) plus the `.ots` file.
-5. Anyone verifies the receipt with the open `ots` client and Bitcoin block headers. It keeps
-   working even if Muhr's server disappears.
+1. You hash the file locally (browser or CLI). Only the hash leaves your device.
+2. The hash is appended to the open Merkle log, and you get an inclusion proof.
+3. Every hour the log root is timestamped through public OpenTimestamps calendars; a few hours later it is in a Bitcoin block.
+4. You keep `.muhr.json` and the `.ots` file.
+5. Anyone verifies them with the open `ots` client and Bitcoin block headers, even if Muhr's server disappears.
 
-What a proof does **not** show: who wrote or signed the file, whether its content is true, or a
-notarised date. It is additional, independently checkable evidence. It does not replace an official
-RFC 3161 timestamp.
+Muhr never holds, sends, sells or issues crypto-assets, and it will never ask for money, keys or seed phrases.
+Why this matters in Uzbekistan (fake verification sites, signatures that say *who* but not *when*):
+[docs/research/legal.md](docs/research/legal.md).
 
-Muhr never holds, sends, sells or issues crypto-assets, and it will never ask for money, keys or
-seed phrases.
-
-## Links
-
-- Site: https://muhr.wonmor.io (source in [`site/`](site/), static, no build step)
-- Plan: [docs/PLAN.md](docs/PLAN.md)
-- Research (Uzbek): [docs/research/](docs/research/README.md): competitors, references, legal
-  notes, design inspiration
-- Design direction: [DESIGN.md](DESIGN.md)
-- Questions and ideas: [GitHub issues](https://github.com/wonmortech/muhr/issues)
-- Security reports (private, not issues): [SECURITY.md](SECURITY.md); verifying a release:
-  [SECURITY.md#verifying-a-release](SECURITY.md#verifying-a-release)
-- How the project is run: [GOVERNANCE.md](GOVERNANCE.md), [CONTRIBUTING.md](CONTRIBUTING.md),
-  [CHANGELOG.md](CHANGELOG.md)
-
-## Site development
-
-`site/` is plain HTML, CSS and JS with self-hosted fonts and a strict CSP (no inline scripts or
-styles, no third-party requests). The three language pages are generated from one template:
+## Try the demo locally
 
 ```sh
-node tools/pages.mjs   # rewrites site/index.html, site/en/, site/ru/, site/404.html, site/favicon.svg
-npm run lint           # ESLint, no warnings allowed
-npm test               # unit + browser tests, then the combined coverage gate over all site JavaScript
+npm ci --ignore-scripts && npm run demo   # http://127.0.0.1:4174/demo/muhr/
+```
+
+Every page runs on fictional data (relative dates, so it never ages); changes stay in memory and reset on reload.
+
+## Docs
+
+- [Plan](docs/PLAN.md): goals, architecture, the 8-week MVP, risks, open questions
+- [Research](docs/research/README.md) (Uzbek): competitors, references, legal notes, inspiration
+- [Design direction](DESIGN.md) · [Assurance case](docs/ASSURANCE.md)
+- [Security](SECURITY.md) (private reports, [verifying a release](SECURITY.md#verifying-a-release)) ·
+  [Governance](GOVERNANCE.md) · [Changelog](CHANGELOG.md)
+
+## Development
+
+`site/` is the home page (https://muhr.wonmor.io): plain HTML, CSS and JS, self-hosted fonts, a strict CSP, no build
+step. `demo/` is the concept demo; `tools/build-demo.mjs` copies it with the shared core into `dist/demo/muhr/`
+and never touches `site/`.
+
+```sh
+node tools/pages.mjs       # regenerate site/index.html, site/en/, site/ru/, site/404.html from one template
+npm run lint               # ESLint, no warnings allowed
+npm test                   # unit + browser tests, then the combined coverage gate over site/ JavaScript
+npm run test:demo          # demo smoke test: every screen under the production CSP, no console errors
+npm run site:screenshots   # rebuild docs/screenshots/ from the demo
 ```
 
 ## Contributing
@@ -76,12 +93,9 @@ Issues and pull requests are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.
 
 ## License
 
-Apache-2.0. The planned `muhr-action` will be MIT and the `.muhr.json` spec CC BY 4.0. Fonts in
-`site/fonts/` are under the SIL Open Font License (see the `LICENSE-*.txt` files there). Every file
-carries SPDX copyright and licence information, checked by [REUSE](https://reuse.software/) in CI; licence
-texts are in [`LICENSES/`](LICENSES/) and [REUSE.toml](REUSE.toml) covers files that cannot hold a comment.
+Apache-2.0. The planned `muhr-action` will be MIT and the `.muhr.json` spec CC BY 4.0. Fonts in `site/fonts/` are
+under the SIL Open Font License. Every file carries SPDX information, checked by [REUSE](https://reuse.software/) in CI.
 
 ---
 
-A [Wonmor](https://wonmor.io) project. Sister projects: [Sanad](https://sanad.wonmor.io) and
-[Shaffof](https://shaffof.wonmor.io).
+A [Wonmor](https://wonmor.io) project. Sister projects: [Sanad](https://sanad.wonmor.io) and [Shaffof](https://shaffof.wonmor.io).

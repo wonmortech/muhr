@@ -1,7 +1,7 @@
 {
   "name": "muhr-site",
   "private": true,
-  "description": "Tests for the Muhr static site. The site itself has no build step and no runtime dependencies.",
+  "description": "Tests for the Muhr static site and its concept demo. Neither has runtime dependencies.",
   "license": "Apache-2.0",
   "engines": {
     "node": ">=24"
@@ -13,7 +13,11 @@
     "coverage": "node tools/coverage.mjs report",
     "lint": "eslint . --max-warnings 0",
     "check": "node tools/check-site.mjs",
-    "serve": "node tests/serve.mjs"
+    "serve": "node tests/serve.mjs",
+    "demo:build": "node tools/build-demo.mjs",
+    "demo": "node tools/build-demo.mjs && node tools/serve-demo.mjs",
+    "test:demo": "playwright test -c playwright.demo.config.mjs",
+    "site:screenshots": "node tools/site-screenshots.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
